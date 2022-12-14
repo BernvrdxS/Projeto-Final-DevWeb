@@ -1,15 +1,15 @@
 function validate() {
 
     let hoje = new Date(); //data atual
-    let dtNasc = new Date(dataNascimentoProfessor.value);
+    let dtNasc = new Date(dataNascimentoAluno.value);
 
-    let idadeProfessor = hoje.getFullYear() - dtNasc.getFullYear();
+    let idadeAluno = hoje.getFullYear() - dtNasc.getFullYear();
     let m = hoje.getMonth() - dtNasc.getMonth();
     if (m < 0 || (m === 0 && hoje.getDate() < dtNasc.getDate())) {
-        idadeProfessor--;
+        idadeAluno--;
     }
-    if (idadeProfessor >= 0) document.getElementById('idadeProfessor').value = idadeProfessor + ' anos ';
-    else document.getElementById('idadeProfessor').value = "Essa data não é válida"
+    if (idadeAluno >= 0) document.getElementById('idadeAluno').value = idadeAluno + ' anos ';
+    else document.getElementById('idadeAluno').value = "Essa data não é válida"
 
 }
 // floreio -- para o usuário confirmar a exclusão
@@ -25,6 +25,13 @@ window.onload = (function () {
         carregaDados();
     });
     document.getElementById('busca').addEventListener('keyup', carregaDados);
+    document.querySelector("form")
+        .addEventListener("submit", event => {
+            console.log("enviar o formulário")
+
+            // não vai enviar o formulário
+            event.preventDefault()
+        })
 });
 
 function carregaDados() {
@@ -32,12 +39,22 @@ function carregaDados() {
     const xhttp = new XMLHttpRequest();  // cria o objeto que fará a conexão assíncrona
     xhttp.onload = function () {  // executa essa função quando receber resposta do servidor
         dados = JSON.parse(this.responseText); // os dados são convertidos para objeto javascript
+        console.log(dados);
         montaTabela(dados);
     }
     // configuração dos parâmetros da conexão assíncrona
-    xhttp.open("GET", "pesquisaProfessor.php?busca=" + busca, true);  // arquivo que será acessado no servidor remoto  
+    xhttp.open("GET", "pesquisaAluno.php?busca=" + busca, true);  // arquivo que será acessado no servidor remoto  
     xhttp.send(); // parâmetros para a requisição
 
+}
+function montaTabela(dados) {
+    str = "";
+    for (aluno of dados) {
+        editar = '<a href=cadastrarAluno.php?acaoAluno=editar&idAluno=' + aluno.idAluno + '>Alterar</a>';
+        excluirAluno = "<a href='#' onclick=excluir('acaoAluno.php?acaoAluno=excluir&idAluno=" + aluno.idAluno + "')>Excluir</a>";
+        str += "<tr><td>" + aluno.idAluno + "</td><td>" + aluno.nomeAluno + "</td><td>" + aluno.telefoneAluno + "</td><td>" + aluno.materiaAluno + "</td><td>" + aluno.nomeProfessor + "</td><td>" + editar + "</td><td>" + excluirAluno + "</td>"
+    }
+    document.getElementById('corpo').innerHTML = str;
 }
 
 const fields = document.querySelectorAll("[required]")
@@ -47,10 +64,10 @@ function ValidateField(field) {
     function verifyErrors() {
         let foundError = false;
 
-        for(let error in field.validity) {
+        for (let error in field.validity) {
             // se não for customError
             // então verifica se tem erro
-            if (field.validity[error] && !field.validity.valid ) {
+            if (field.validity[error] && !field.validity.valid) {
                 foundError = error
             }
         }
@@ -77,7 +94,7 @@ function ValidateField(field) {
 
     function setCustomMessage(message) {
         const spanError = field.parentNode.querySelector("span.error")
-        
+
         if (message) {
             spanError.classList.add("active")
             spanError.innerHTML = message
@@ -87,11 +104,11 @@ function ValidateField(field) {
         }
     }
 
-    return function() {
+    return function () {
 
         const error = verifyErrors()
 
-        if(error) {
+        if (error) {
             const message = customMessage(error)
 
             field.style.borderColor = "red"
@@ -113,8 +130,8 @@ function customValidation(event) {
 
 }
 
-for( field of fields ){
-    field.addEventListener("invalid", event => { 
+for (field of fields) {
+    field.addEventListener("invalid", event => {
         // eliminar o bubble
         event.preventDefault()
 
@@ -124,10 +141,3 @@ for( field of fields ){
 }
 
 
-document.querySelector("form")
-.addEventListener("submit", event => {
-    console.log("enviar o formulário")
-
-    // não vai enviar o formulário
-    event.preventDefault()
-})
