@@ -5,6 +5,19 @@
 $acao = isset($_GET["acaoAluno"]) ? $_GET["acaoAluno"] : "";
 $id = isset($_GET["idAluno"]) ? $_GET["idAluno"] : "";
 
+$query = 'SELECT nomeProfessor, nomeProfessor from escola.professor';
+//mysqli_close($con);
+$con = mysqli_connect('localhost','root','', 'escola');
+if (mysqli_connect_errno()) {
+    echo "erro MySQL: " . mysqli_connect_error();
+    mysqli_close($con);
+    exit();
+  }
+
+$result = mysqli_query($con, $query);
+$linhas = mysqli_fetch_all($result);
+mysqli_close($con);
+
 if ($acao == "editar") {
     try {
         include_once "config/config.php";
@@ -32,7 +45,8 @@ if ($acao == "editar") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Alunos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
 </head>
 
@@ -92,9 +106,23 @@ if ($acao == "editar") {
                     <input type="text" class="form-control" name="idadeAluno" id="idadeAluno" placeholder="Idade do Aluno" readonly>
                 </div>
             </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                            <select  class="form-control"  name="nomeProfessor" id="nomeProfessor">
+                            <option value="0">Escolha o Professor</option>
+                            <?php
+                            foreach($linhas as $linha){
+                                    echo "<option value='$linha[0]'>$linha[1]</option>";
+                            }
+                            ?>
+                            </select>
+                            </div>
+                </div>
+            </div>
+            <br>
             <br>
             <div>
-                <button class=" btn btn-primary" type="submit" name="acao" value="salvar">Salvar</button>
+                <button class="btn btn-primary" type="submit" name="acao" value="salvar">Salvar</button>
                 <input class="btn btn-cancel" type="reset" name="cancelar" value="Cancelar" onclick='window.location.href="home.php"'>
             </div>
         </form>

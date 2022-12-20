@@ -1,15 +1,15 @@
 function validate() {
 
     let hoje = new Date(); //data atual
-    let dtNasc = new Date(dataNascimentoAluno.value);
+    let dtNasc = new Date(dataNascimentoProfessor.value);
 
-    let idadeAluno = hoje.getFullYear() - dtNasc.getFullYear();
+    let idadeProfessor = hoje.getFullYear() - dtNasc.getFullYear();
     let m = hoje.getMonth() - dtNasc.getMonth();
     if (m < 0 || (m === 0 && hoje.getDate() < dtNasc.getDate())) {
-        idadeAluno--;
+        idadeProfessor--;
     }
-    if (idadeAluno >= 0) document.getElementById('idadeAluno').value = idadeAluno + ' anos ';
-    else document.getElementById('idadeAluno').value = "Essa data não é válida"
+    if (idadeProfessor >= 0) document.getElementById('idadeProfessor').value = idadeProfessor + ' anos ';
+    else document.getElementById('idadeProfessor').value = "Essa data não é válida"
 
 }
 // floreio -- para o usuário confirmar a exclusão
@@ -43,16 +43,16 @@ function carregaDados() {
         montaTabela(dados);
     }
     // configuração dos parâmetros da conexão assíncrona
-    xhttp.open("GET", "pesquisaAluno.php?busca=" + busca, true);  // arquivo que será acessado no servidor remoto  
+    xhttp.open("GET", "pesquisaProfessor.php?busca=" + busca, true);  // arquivo que será acessado no servidor remoto  
     xhttp.send(); // parâmetros para a requisição
 
 }
 function montaTabela(dados) {
     str = "";
-    for (aluno of dados) {
-        editar = '<a href=cadastrarAluno.php?acaoAluno=editar&idAluno=' + aluno.idAluno + '>Alterar</a>';
-        excluirAluno = "<a href='#' onclick=excluir('acaoAluno.php?acaoAluno=excluir&idAluno=" + aluno.idAluno + "')>Excluir</a>";
-        str += "<tr><td>" + aluno.idAluno + "</td><td>" + aluno.nomeAluno + "</td><td>" + aluno.telefoneAluno + "</td><td>" + aluno.materiaAluno + "</td><td>" + aluno.nomeProfessor + "</td><td>" + editar + "</td><td>" + excluirAluno + "</td>"
+    for (professor of dados) {
+        editar = '<a href=cadastrarProfessor.php?acaoProfessor=editar&idProfessor=' + professor.idProfessor + '>Alterar</a>';
+        excluirProfessor = "<a href='#' onclick=excluir('acaoProfessor.php?acaoProfessor=excluir&idProfessor=" + professor.idProfessor + "')>Excluir</a>";
+        str += "<tr><td>" + professor.idProfessor + "</td><td>" + professor.nomeProfessor + "</td><td>" + professor.telefoneProfessor + "</td><td>" + professor.emailProfessor + "</td><td>" + professor.idadeProfessor + "</td><td>" + editar + "</td>" + "</td><td>" + excluirProfessor + "</td>"
     }
     document.getElementById('corpo').innerHTML = str;
 }

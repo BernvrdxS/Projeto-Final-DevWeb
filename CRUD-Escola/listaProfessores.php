@@ -11,7 +11,7 @@
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
     <title>Lista de Alunos</title>
-    <script src="scriptAluno.js"></script>
+    <script src="scriptListaProfessor.js"></script>
 </head>
 <body>
     <nav>
@@ -38,10 +38,8 @@
                             <th>Id</th>
                             <th>Aluno</th>
                             <th>Telefone</th>
-                            <th>Materia</th>
-                            <th>Professor</th>
-                            <th>Editar</th>
-                            <th>Excluir</th>
+                            <th>Email</th>
+                            <th>Idade</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider" id='corpo'>

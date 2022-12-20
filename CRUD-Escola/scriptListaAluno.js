@@ -52,7 +52,7 @@ function montaTabela(dados) {
     for (aluno of dados) {
         editar = '<a href=cadastrarAluno.php?acaoAluno=editar&idAluno=' + aluno.idAluno + '>Alterar</a>';
         excluirAluno = "<a href='#' onclick=excluir('acaoAluno.php?acaoAluno=excluir&idAluno=" + aluno.idAluno + "')>Excluir</a>";
-        str += "<tr><td>" + aluno.idAluno + "</td><td>" + aluno.nomeAluno + "</td><td>" + aluno.telefoneAluno + "</td><td>" + aluno.materiaAluno + "</td><td>" + aluno.nomeProfessor + "</td><td>" + editar + "</td><td>" + excluirAluno + "</td>"
+        str += "<tr><td>" + aluno.idAluno + "</td><td>" + aluno.nomeAluno + "</td><td>" + aluno.telefoneAluno + "</td><td>" + aluno.materiaAluno + "</td><td>" + aluno.emailAluno + "</td><td>" + aluno.idadeAluno + "</td><td>" + editar + "</td>" + "</td><td>" + excluirAluno + "</td>"
     }
     document.getElementById('corpo').innerHTML = str;
 }

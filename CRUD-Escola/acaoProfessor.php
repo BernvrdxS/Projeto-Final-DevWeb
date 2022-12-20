@@ -10,7 +10,7 @@ $emailProfessor = isset($_POST["emailProfessor"])?$_POST["emailProfessor"]:"";
 $idadeProfessor = isset($_POST["idadeProfessor"])?$_POST["idadeProfessor"]:"";
 
 
-$acao = isset($_GET["acao"])?$_GET["acao"]:"";
+$acao = isset($_GET["acaoProfessor"])?$_GET["acaoProfessor"]:"";
 
 if ($acao == "excluir"){
     try{

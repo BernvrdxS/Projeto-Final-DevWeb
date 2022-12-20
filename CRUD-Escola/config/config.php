@@ -6,3 +6,4 @@ define ('DB_DB','escola');              // nome banco
 define ('DB_PORT','3306');              // porta que o banco de dados recebe requisições
 define ('MYSQL_DSN',"mysql:host=".DB_HOST.";port=".DB_PORT.";dbname=".DB_DB.";charset=UTF8");
 ?>
+

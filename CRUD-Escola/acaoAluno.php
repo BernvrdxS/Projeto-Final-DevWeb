@@ -9,6 +9,8 @@ $telefoneAluno = isset($_POST["telefoneAluno"])?$_POST["telefoneAluno"]:"";
 $emailAluno = isset($_POST["emailAluno"])?$_POST["emailAluno"]:"";
 $idadeAluno = isset($_POST["idadeAluno"])?$_POST["idadeAluno"]:"";
 $materiaAluno = isset($_POST["materiaAluno"])?$_POST["materiaAluno"]:"";
+$nomeProfessor = isset($_POST["nomeProfessor"])?$_POST["nomeProfessor"]:"";
+
 
 $acao = isset($_GET["acaoAluno"])?$_GET["acaoAluno"]:"";
 
@@ -38,9 +40,9 @@ if($nomeAluno != "" && $emailAluno != "" && $idadeAluno != ""){
         $conexao = new PDO(MYSQL_DSN,DB_USER,DB_PASSWORD);
 
         if($idAluno > 0){
-            $query = "UPDATE Aluno SET nomeAluno = :nomeAluno, emailAluno = :emailAluno, idadeAluno = :idadeAluno , dataNascimentoAluno = :dataNascimentoAluno, telefoneAluno = :telefoneAluno, materiaAluno = :materiaAluno WHERE idAluno = :idAluno";
+            $query = "UPDATE aluno SET nomeAluno = :nomeAluno, emailAluno = :emailAluno, idadeAluno = :idadeAluno , dataNascimentoAluno = :dataNascimentoAluno, telefoneAluno = :telefoneAluno, materiaAluno = :materiaAluno, nomeProfessor = :nomeProfessor WHERE idAluno = :idAluno";
         }else{
-            $query = "INSERT INTO Aluno (nomeAluno, emailAluno, idadeAluno, dataNascimentoAluno, telefoneAluno, materiaAluno) VALUES(:nomeAluno, :emailAluno, :idadeAluno, :dataNascimentoAluno, :telefoneAluno, :materiaAluno)";
+            $query = "INSERT INTO aluno (nomeAluno, emailAluno, idadeAluno, dataNascimentoAluno, telefoneAluno, materiaAluno, nomeProfessor) VALUES(:nomeAluno, :emailAluno, :idadeAluno, :dataNascimentoAluno, :telefoneAluno, :materiaAluno, :nomeProfessor)";
         }
 
         $stmt = $conexao->prepare($query);
@@ -50,7 +52,9 @@ if($nomeAluno != "" && $emailAluno != "" && $idadeAluno != ""){
         $stmt->bindValue(":idadeAluno",$idadeAluno);
         $stmt->bindValue(":dataNascimentoAluno",$dataNascimentoAluno);
         $stmt->bindValue(":telefoneAluno", $telefoneAluno);
-        $stmt->bindValue(":materiaAluno", $materiaAluno);
+        $stmt->bindValue(":materiaAluno", $materiaAluno);        
+        $stmt->bindValue(":nomeProfessor", $nomeProfessor);
+
         if($idAluno > 0){
             $stmt->bindValue(":idAluno",$idAluno);
         }
